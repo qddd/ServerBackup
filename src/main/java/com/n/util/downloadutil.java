@@ -149,7 +149,7 @@ public class downloadutil extends  Observable implements Runnable {
 			//开始写新文件.
 			file = new RandomAccessFile(tmpfilename, "rw");
 			file.seek(downloaded);
-
+			System.out.println("大小共:"+size/1000+"K");
 			stream = connection.getInputStream();
 			while (status == DOWNLOADING) {
 				// Size buffer according to how much of the file is left to download.
@@ -166,7 +166,7 @@ public class downloadutil extends  Observable implements Runnable {
 					break;
 
 				// Write buffer to file.
-				System.out.print("\r共"+size+",....已下载:"+downloaded);
+				System.out.print("\r已下载:"+downloaded/1000+"K");
 				file.write(buffer, 0, read);
 				downloaded += read;
 			}
