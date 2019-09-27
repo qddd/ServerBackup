@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="300">
+  <Properties>
+    <Property name="filepath">E:/logs</Property>
+  </Properties>
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+    </Console>
+    <RollingRandomAccessFile name="InfoFile" fileName="${filepath}/backgroundnewinfo.log" filePattern="${filepath}/$${date:yyyy-MM}/info-%d{dd}-%i.log">
+      <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}\t%level\t%c\t%msg%xEx\t%M\t%L%n" />
+      <Policies>
+      	<TimeBasedTriggeringPolicy />
+      	<SizeBasedTriggeringPolicy size="120MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="20" />
+    </RollingRandomAccessFile>
+    <RollingRandomAccessFile name="ErrFile" fileName="${filepath}/backgroundnewerr.log" filePattern="${filepath}/$${date:yyyy-MM}/err-%d{dd}-%i.log">
+      <PatternLayout charset="UTF-8" pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%c.%M.%L] -->> %msg%xEx%n" />
+      <Policies>
+      	<TimeBasedTriggeringPolicy />
+      	<SizeBasedTriggeringPolicy size="10MB" />
+      </Policies>
+      <DefaultRolloverStrategy max="20" />
+    </RollingRandomAccessFile>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="InfoFile" />
+    </Root>
+  </Loggers>
+</Configuration>
