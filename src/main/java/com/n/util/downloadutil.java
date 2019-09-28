@@ -17,7 +17,7 @@ public class downloadutil extends  Observable implements Runnable {
 	private static Logger logger = LoggerFactory.getLogger("服务器文件下载器");
 
 	// Max size of download buffer.
-	private static final int MAX_BUFFER_SIZE = 1024;
+	private static final int MAX_BUFFER_SIZE = 16184;
 
 	// These are the status names.
 	public static final String STATUSES[] = { "Downloading", "Paused", "Complete", "Cancelled", "Error" };
@@ -166,9 +166,10 @@ public class downloadutil extends  Observable implements Runnable {
 					break;
 
 				// Write buffer to file.
-				System.out.print("\r已下载:"+downloaded/1000+"K");
+			
 				file.write(buffer, 0, read);
 				downloaded += read;
+				System.out.print("\r已下载:"+downloaded/1000+"K");
 			}
 			System.out.println(" ");
 
@@ -228,14 +229,7 @@ public class downloadutil extends  Observable implements Runnable {
 		notifyObservers();
 	}
 
-	public static void main(String args[]) {
-		try {
-			downloadutil d = new downloadutil("http://www.baidu.com/img/bd_logo1.png","d:/temp.png","d","","");
-			d.run();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	}
+
 
 	public String getFile_Id_onServer() {
 		return File_Id_onServer;
