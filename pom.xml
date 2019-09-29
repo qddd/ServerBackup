@@ -184,14 +184,6 @@
 		</dependency>
 
 
-
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.5</version>
-		</dependency>
-
-
 		<!-- jackson json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -234,13 +226,7 @@
 			<version>3.11</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.axis</groupId>
-			<artifactId>axis</artifactId>
-			<version>1.4</version>
-		</dependency>
-
-
+ 
  
 
 		<dependency>
