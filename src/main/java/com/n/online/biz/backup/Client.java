@@ -18,6 +18,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.JsonParser.Feature;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -52,22 +53,24 @@ public class Client extends Base implements Observer {
 		while (true) {
 			try {
 				// 读取配置
-				Properties settings = getproperties();
+				Properties settings = getproperties("system");
 
 				String clientid = settings.getProperty("backup.clientid");
 				String key = settings.getProperty("backup.key");
-				String[] catagorys = settings.getProperty("backup.catagory").split(",");
 				String localRootDir = settings.getProperty("backup.localRootDir");
-
+				String domainorip = settings.getProperty("backup.server.domainorip");
+				String[] catagorys = settings.getProperty("backup.catagory").split(",");
+				
 				// 逐个类别处理，每类每次个文 件下载
 				for (int i = 0; i < catagorys.length; i++) {
-					// 设置请求参数
 					String catagory = catagorys[i];
-					String marker_locationTimestamp_lastdownload = settings.getProperty("backup.locationTimestamp." + catagory);
+					Properties settings_catatory = getproperties(catagory);
+					// 设置请求参数
+					String marker_locationTimestamp_lastdownload = settings_catatory.getProperty("backup.locationTimestamp." + catagory);
 					if (cString.isnovalue(marker_locationTimestamp_lastdownload))
 						marker_locationTimestamp_lastdownload = "0";
 
-					String domainorip = settings.getProperty("backup.server.domainorip");
+				
 					String src_url_getlist = "http://" + domainorip + "/getbackupDownloadList?key=" + key + "&c=" + clientid + "&catagory=" + catagory + "&m=" + marker_locationTimestamp_lastdownload;
 
 					// 开始处理, 获取下载的文件列表100个,获取请求的地址：
@@ -209,10 +212,18 @@ public class Client extends Base implements Observer {
 		}
 	}
 
-	private String propertyfileName = "system.properties";
 
-	public Properties getproperties() throws IOException {
-		String filePath = Client.class.getClassLoader().getResource(propertyfileName).getFile(); // 文件的路径
+
+	public Properties getproperties(String catagroyname) throws IOException {
+		String filePath = Client.class.getClassLoader().getResource("system.properties").getFile().replace("system.properties", catagroyname+".properties"); // 文件的路径
+		if(!"system".equals(catagroyname))
+			{
+			  File f1 = new File(filePath);
+			  if(!f1.exists())
+				  f1.createNewFile();
+			  
+			}
+		
 		Properties props = new Properties();
 		BufferedReader br = null;
 
@@ -231,10 +242,10 @@ public class Client extends Base implements Observer {
 	 * @param fileName    文件名(放在resource源包目录下)，需要后缀
 	 * @param keyValueMap 键值对Map
 	 */
-	public void updateProperties(String[] key, String value[]) {
+	public void updateProperties(String catagroyname,String[] key, String value[]) {
 		// InputStream inputStream =
 		// Client.class.getClassLoader().getResourceAsStream(fileName); //输入流
-		String filePath = Client.class.getClassLoader().getResource(propertyfileName).getFile(); // 文件的路径
+		String filePath = Client.class.getClassLoader().getResource(catagroyname+".properties").getFile(); // 文件的路径
 		logger.info("........更新属性文件propertiesPath:" + filePath + "键值" + key + "-" + value);
 		Properties props = new Properties();
 		BufferedReader br = null;
@@ -285,6 +296,6 @@ public class Client extends Base implements Observer {
 	{
 		String[] key = { "backup.locationTimestamp." + ADownloadrecord.get("filecatagory"), "backup.locationTimestamp." + ADownloadrecord.get("filecatagory") + ".des", "backup.locationTimestamp."+ADownloadrecord.get("filecatagory")+".id_filepath" };
 		String[] value = { ADownloadrecord.get("filemodifydate_scan").toString(), (String) ADownloadrecord.get("filemodifydate_scan_des"), (String) ADownloadrecord.get("filepath") };
-		updateProperties(key, value);
+		updateProperties(ADownloadrecord.get("filecatagory").toString(),key, value);
 	}
 	}

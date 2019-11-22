@@ -214,7 +214,7 @@ public class ServerCtrl  {
 
 	private Properties settings =null;
 	private boolean loginclient(HttpSession session, String clientid, String password) throws IOException {
-		if(settings ==null) settings =new Client().getproperties();
+		if(settings ==null) settings =new Client().getproperties("system");
 		String _clientid = settings.getProperty("backup.clientid");
 		String _key = settings.getProperty("backup.key");
 
