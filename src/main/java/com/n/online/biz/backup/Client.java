@@ -283,7 +283,7 @@ public class Client extends Base implements Observer {
 
 	private void updateClientLocaltionMark(HashMap<String, Object> ADownloadrecord)
 	{
-		String[] key = { "backup.locationTimestamp." + ADownloadrecord.get("filecatagory"), "backup.locationTimestamp." + ADownloadrecord.get("filecatagory") + ".des", "backup.locationTimestamp.id_filepath" };
+		String[] key = { "backup.locationTimestamp." + ADownloadrecord.get("filecatagory"), "backup.locationTimestamp." + ADownloadrecord.get("filecatagory") + ".des", "backup.locationTimestamp."+ADownloadrecord.get("filecatagory")+".id_filepath" };
 		String[] value = { ADownloadrecord.get("filemodifydate_scan").toString(), (String) ADownloadrecord.get("filemodifydate_scan_des"), (String) ADownloadrecord.get("filepath") };
 		updateProperties(key, value);
 	}
