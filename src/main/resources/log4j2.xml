@@ -7,7 +7,7 @@
     <Console name="Console" target="SYSTEM_OUT">
       <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
     </Console>
-    <RollingRandomAccessFile name="InfoFile" fileName="${filepath}/backgroundnewinfo.log" filePattern="${filepath}/$${date:yyyy-MM}/info-%d{dd}-%i.log">
+    <RollingRandomAccessFile name="InfoFile" fileName="${filepath}/serverbackup_info.log" filePattern="${filepath}/$${date:yyyy-MM}/info-%d{dd}-%i.log">
       <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}\t%level\t%c\t%msg%xEx\t%M\t%L%n" />
       <Policies>
       	<TimeBasedTriggeringPolicy />
@@ -15,7 +15,7 @@
       </Policies>
       <DefaultRolloverStrategy max="20" />
     </RollingRandomAccessFile>
-    <RollingRandomAccessFile name="ErrFile" fileName="${filepath}/backgroundnewerr.log" filePattern="${filepath}/$${date:yyyy-MM}/err-%d{dd}-%i.log">
+    <RollingRandomAccessFile name="ErrFile" fileName="${filepath}/serverbackup_err.log" filePattern="${filepath}/$${date:yyyy-MM}/err-%d{dd}-%i.log">
       <PatternLayout charset="UTF-8" pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%c.%M.%L] -->> %msg%xEx%n" />
       <Policies>
       	<TimeBasedTriggeringPolicy />
@@ -28,6 +28,10 @@
     <Root level="info">
       <AppenderRef ref="Console" />
       <AppenderRef ref="InfoFile" />
+    </Root>
+     <Root level="error">
+      <AppenderRef ref="Console" />
+      <AppenderRef ref="ErrFile" />
     </Root>
   </Loggers>
 </Configuration>
