@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO" monitorInterval="300">
   <Properties>
-    <Property name="filepath">E:/logs</Property>
+    <Property name="filepath">C:/logs</Property>
   </Properties>
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
@@ -16,6 +16,7 @@
       <DefaultRolloverStrategy max="20" />
     </RollingRandomAccessFile>
     <RollingRandomAccessFile name="ErrFile" fileName="${filepath}/serverbackup_err.log" filePattern="${filepath}/$${date:yyyy-MM}/err-%d{dd}-%i.log">
+         <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
       <PatternLayout charset="UTF-8" pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%c.%M.%L] -->> %msg%xEx%n" />
       <Policies>
       	<TimeBasedTriggeringPolicy />
@@ -25,13 +26,13 @@
     </RollingRandomAccessFile>
   </Appenders>
   <Loggers>
+     <logger name="org.springframework" level="INFO"></logger>
+     <logger name="org.mybatis" level="INFO"></logger>
     <Root level="info">
       <AppenderRef ref="Console" />
       <AppenderRef ref="InfoFile" />
-    </Root>
-     <Root level="error">
-      <AppenderRef ref="Console" />
       <AppenderRef ref="ErrFile" />
     </Root>
+     
   </Loggers>
 </Configuration>
