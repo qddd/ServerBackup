@@ -25,7 +25,7 @@
 		<maven.test.skip>true</maven.test.skip>
 
 		<!-- tools version setting -->
-    	<commons-io.version>2.4</commons-io.version>
+    	<commons-io.version>2.7</commons-io.version>
 		<commons-beanutils.version>1.9.1</commons-beanutils.version>
 		<xstream.version>1.4.9</xstream.version>
 		<jackson.version>2.9.4</jackson.version>
