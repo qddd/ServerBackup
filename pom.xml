@@ -38,7 +38,7 @@
 		<common-lang.version>2.6</common-lang.version>
 	 
 		<junit.version>4.12</junit.version>
-		<httpclient.version>4.5.2</httpclient.version>
+		<httpclient.version>4.5.13</httpclient.version>
 		<httpcore.version>4.4.6</httpcore.version>
 		<swagger-ui.version>2.5.0</swagger-ui.version>
 		<configuration.version>1.7</configuration.version>
